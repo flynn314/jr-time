@@ -4,4 +4,9 @@ if (!function_exists('secondsToJrTime')) {
     {
         return (new \Flynn314\DateTime\JrTime())->format($seconds, $glue);
     }
+
+    function secondsToJrTimeSimple(int $seconds): string
+    {
+        return (new \Flynn314\DateTime\JrTime())->formatSimple($seconds);
+    }
 }

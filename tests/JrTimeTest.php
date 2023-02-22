@@ -41,10 +41,10 @@ class JrTimeTest extends TestCase
 
     public function testNonPrecise(): void
     {
-        $this->assertEquals('59s', $this->jrTime->formatNonPrecise(59));
-        $this->assertEquals('1d', $this->jrTime->formatNonPrecise(60 * 60 * 24 + 1));
-        $this->assertEquals('1d', $this->jrTime->formatNonPrecise(60 * 60 * 24 + 60));
-        $this->assertEquals('1y', $this->jrTime->formatNonPrecise(60 * 60 * 24 * 366));
+        $this->assertEquals('59s', $this->jrTime->formatSimple(59));
+        $this->assertEquals('1d', $this->jrTime->formatSimple(60 * 60 * 24 + 1));
+        $this->assertEquals('1d', $this->jrTime->formatSimple(60 * 60 * 24 + 60));
+        $this->assertEquals('1y', $this->jrTime->formatSimple(60 * 60 * 24 * 366));
     }
 
     public function testFunction(): void

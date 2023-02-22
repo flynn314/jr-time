@@ -15,7 +15,7 @@ final class JrTime
         return $this->formatTo([], $seconds, true, $glue);
     }
 
-    public function formatNonPrecise(int $seconds): string
+    public function formatSimple(int $seconds): string
     {
         return $this->formatTo([], $seconds, false, '');
     }
