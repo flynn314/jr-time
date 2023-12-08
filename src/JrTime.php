@@ -25,7 +25,7 @@ final class JrTime
         return $this->formatTo([], $seconds, true, $glue, 2);
     }
 
-    public function formatWithCustomDayLength(int $seconds, int $dayLengthInHours, bool $precise = true, string $glue = ''): string
+    public function formatWithCustomDayLength(int $seconds, int $dayLengthInHours, bool $precise = true, string $glue = '', int $segments = 9): string
     {
         return $this->formatTo([
             'y' => 3600 * $dayLengthInHours * 7 * 365,
@@ -33,7 +33,7 @@ final class JrTime
             'd' => 3600 * $dayLengthInHours,
             'h' => 3600,
             'm' => 60,
-        ], $seconds, $precise, $glue);
+        ], $seconds, $precise, $glue, $segments);
     }
 
     private function formatTo(array $mapping, int $seconds, bool $precise, string $glue, int $segments = 9): string
