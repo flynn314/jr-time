@@ -20,6 +20,11 @@ final class JrTime
         return $this->formatTo([], $seconds, false, '');
     }
 
+    public function formatDuo(int $seconds, string $glue = ''): string
+    {
+        return $this->formatTo([], $seconds, true, $glue, 2);
+    }
+
     public function formatWithCustomDayLength(int $seconds, int $dayLengthInHours, bool $precise = true, string $glue = ''): string
     {
         return $this->formatTo([
@@ -31,7 +36,7 @@ final class JrTime
         ], $seconds, $precise, $glue);
     }
 
-    private function formatTo(array $mapping, int $seconds, bool $precise, string $glue): string
+    private function formatTo(array $mapping, int $seconds, bool $precise, string $glue, int $segments = 9): string
     {
         if (!$mapping) {
             $mapping = [
@@ -55,6 +60,10 @@ final class JrTime
         }
         if ($seconds) {
             $formatted['s'] = $seconds.'s';
+        }
+
+        if (count($formatted) > $segments) {
+            $formatted = array_slice($formatted, 0, $segments);
         }
 
         return implode($glue, $formatted);

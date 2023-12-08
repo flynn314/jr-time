@@ -20,12 +20,8 @@ class JrTimeTest extends TestCase
 
     /**
      * @dataProvider dateProvider
-     * @param string   $expected
-     * @param string   $seconds
-     * @param null|int $dayLength
-     * @return void
      */
-    public function testCase(string $expected, string $seconds, ?int $dayLength = null): void
+    public function testCase(string $expected, int $seconds, ?int $dayLength = null): void
     {
         if ($dayLength) {
             $this->assertEquals($expected, $this->jrTime->formatWithCustomDayLength($seconds, $dayLength));
@@ -36,15 +32,26 @@ class JrTimeTest extends TestCase
 
     public function testFormat(): void
     {
+        $this->assertEquals('', $this->jrTime->format(0, ' '));
         $this->assertEquals('1d 1s', $this->jrTime->format(60 * 60 * 24 + 1, ' '));
     }
 
-    public function testNonPrecise(): void
+    public function testSimple(): void
     {
+        $this->assertEquals('', $this->jrTime->formatSimple(0));
         $this->assertEquals('59s', $this->jrTime->formatSimple(59));
         $this->assertEquals('1d', $this->jrTime->formatSimple(60 * 60 * 24 + 1));
         $this->assertEquals('1d', $this->jrTime->formatSimple(60 * 60 * 24 + 60));
         $this->assertEquals('1y', $this->jrTime->formatSimple(60 * 60 * 24 * 366));
+    }
+
+    public function testSimpleExtended(): void
+    {
+        $this->assertEquals('', $this->jrTime->formatDuo(0, ' '));
+        $this->assertEquals('59s', $this->jrTime->formatDuo(59, ' '));
+        $this->assertEquals('1d 1s', $this->jrTime->formatDuo(60 * 60 * 24 + 1, ' '));
+        $this->assertEquals('1d 1m', $this->jrTime->formatDuo(60 * 60 * 24 + 64, ' '));
+        $this->assertEquals('1y 1d', $this->jrTime->formatDuo(60 * 60 * 24 * 366 + 119, ' '));
     }
 
     public function testFunction(): void
@@ -52,9 +59,10 @@ class JrTimeTest extends TestCase
         $this->assertEquals('59s', secondsToJrTime(59));
     }
 
-    public function dateProvider(): array
+    public static function dateProvider(): array
     {
         return [
+            ['', 0],
             ['1s', 1],
             ['59s', 59],
             ['1m', 60],
@@ -70,6 +78,8 @@ class JrTimeTest extends TestCase
             ['4w2d', 60 * 60 * 24 * 30],
             ['1y', 60 * 60 * 24 * 365],
             ['1y1d', 60 * 60 * 24 * 366],
+            ['1y1d4h1m59s', 60 * 60 * 24 * 366 + 14400 + 119],
+            ['1y2w1d4h1m59s', 60 * 60 * 24 * 366 + 14400 + 119 + (60 * 60 * 24 * 14)],
 
             ['1s', 1, 8],
             ['59s', 59, 8],
