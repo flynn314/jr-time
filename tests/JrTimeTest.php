@@ -11,9 +11,9 @@ class JrTimeTest extends TestCase
 {
     private JrTime $jrTime;
 
-    public function __construct($name = null, array $data = [], $dataName = '')
+    public function __construct($name = null)
     {
-        parent::__construct($name, $data, $dataName);
+        parent::__construct($name);
 
         $this->jrTime = new JrTime();
     }
@@ -45,11 +45,12 @@ class JrTimeTest extends TestCase
         $this->assertEquals('1y', $this->jrTime->formatSimple(60 * 60 * 24 * 366));
     }
 
-    public function testSimpleExtended(): void
+    public function testDuo(): void
     {
         $this->assertEquals('', $this->jrTime->formatDuo(0, ' '));
         $this->assertEquals('59s', $this->jrTime->formatDuo(59, ' '));
         $this->assertEquals('1d 1s', $this->jrTime->formatDuo(60 * 60 * 24 + 1, ' '));
+        $this->assertEquals('1d', $this->jrTime->formatDuo(60 * 60 * 24 + 1, ' ', false));
         $this->assertEquals('1d 1m', $this->jrTime->formatDuo(60 * 60 * 24 + 64, ' '));
         $this->assertEquals('1y 1d', $this->jrTime->formatDuo(60 * 60 * 24 * 366 + 119, ' '));
     }
