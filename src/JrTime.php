@@ -59,6 +59,9 @@ final class JrTime
                 }
             }
         }
+        if (!$formatted) {
+            $withSeconds = false;
+        }
         if ($withSeconds && $seconds) {
             $formatted['s'] = $seconds.'s';
         }
