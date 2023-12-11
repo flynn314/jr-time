@@ -60,7 +60,7 @@ final class JrTime
             }
         }
         if (!$formatted) {
-            $withSeconds = false;
+            $withSeconds = true;
         }
         if ($withSeconds && $seconds) {
             $formatted['s'] = $seconds.'s';
